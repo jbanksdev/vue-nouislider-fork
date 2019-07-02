@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.7
+ * vue-nouislider-fork v1.0.8
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
@@ -8,11 +8,11 @@
 //
 //
 //
-require("./nouislider.min.js");
+var noUiSlider = require("../nouislider.min.js");
 
-require("./nouislider.min.css");
+require("../nouislider.min.css");
 
-require("./nouislider-custom.css");
+require("../nouislider-custom.css");
 
 var script = {
   props: {
