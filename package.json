@@ -11,7 +11,7 @@
  "main": "./dist/index.js",
  "scripts": {
   "demo": "vue serve Demo.vue",
-  "build": "bili --name index --plugin vue --vue.css false"
+  "build": "bili ./index.js --bundle-node-modules"
  },
  "devDependencies": {
   "install": "^0.12.2",
