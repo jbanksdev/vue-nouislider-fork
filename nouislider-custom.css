@@ -1,0 +1,29 @@
+.noUi-horizontal .noUi-handle {
+    border: none;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  html:not([dir=rtl]) .noUi-horizontal .noUi-handle {
+    right: -14px;
+    left: auto;
+  }
+
+  .noUi-handle:after, .noUi-handle:before {
+    display: none;
+  }
+
+  .noUi-target {
+    background: #bdbdbd;
+    border: none;
+    height: 2.5px;
+  }

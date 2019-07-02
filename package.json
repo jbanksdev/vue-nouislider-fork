@@ -8,7 +8,7 @@
   "horans"
  ],
  "license": "MIT",
- "main": "./dist/index.cjs.js",
+ "main": "./dist/index.js",
  "scripts": {
   "demo": "vue serve Demo.vue",
   "build": "bili --name index --plugin vue --vue.css false"
