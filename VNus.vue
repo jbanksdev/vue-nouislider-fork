@@ -2,9 +2,9 @@
   <div :id="'v-nus-' + id"></div>
 </template>
 <script>
-require("./nouislider.min.js");
-require("./nouislider.min.css");
-require("./nouislider-custom.css");
+var noUiSlider = require("../nouislider.min.js");
+require("../nouislider.min.css");
+require("../nouislider-custom.css");
 
 export default {
   props: {
