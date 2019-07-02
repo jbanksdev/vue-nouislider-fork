@@ -13,9 +13,6 @@
   "demo": "vue serve Demo.vue",
   "build": "bili --name index --plugin vue --vue.css false"
  },
- "files": [
-  "dist/*"
- ],
  "devDependencies": {
   "install": "^0.12.2",
   "npm": "^6.9.2",
