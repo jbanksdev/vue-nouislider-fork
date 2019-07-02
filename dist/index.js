@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.0
+ * vue-nouislider-fork v1.0.5
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
@@ -12,11 +12,11 @@ var __vue_normalize__ = _interopDefault(require('vue-runtime-helpers/dist/normal
 //
 //
 //
-require("./nouislider.min.js");
+require("../nouislider.min.js");
 
-require("./nouislider.min.css");
+require("../nouislider.min.css");
 
-require("./nouislider-custom.css");
+require("../nouislider-custom.css");
 
 var script = {
   props: {
