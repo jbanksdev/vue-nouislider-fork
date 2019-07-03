@@ -184,11 +184,6 @@ export default {
       var handles = Array.from(slider.querySelectorAll(".noUi-handle"));
 
       handles[i].parentElement.appendChild(tooltip);
-      /*  for (let i = 0; i < handles.length; i++) {
-        const handle = handles[i];
-        //handle.parentElement.appendChild(tooltip);
-        console.log(handle.getAttribute("aria-valuenow"));
-      } */
 
       return span;
     }

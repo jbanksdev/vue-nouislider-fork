@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.8
+ * vue-nouislider-fork v1.0.10
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
@@ -25,7 +25,14 @@ var script = {
     },
     color: {
       type: String,
-      "default": "#eeeeee"
+      "default": "#1867c0"
+    },
+    showThumb: {
+      type: Boolean
+    },
+    thumbColor: {
+      type: String,
+      "default": "#1867c0"
     },
     config: Object,
     value: Array,
@@ -33,7 +40,9 @@ var script = {
   },
   data: function data() {
     return {
-      init: false
+      init: false,
+      upperHandleValue: 0,
+      lowerHandleValue: 0
     };
   },
   created: function created() {},
@@ -46,10 +55,42 @@ var script = {
     var _this = this;
 
     var vnus = this;
-    console.log(vnus);
     vnus.config.start = vnus.value;
-    noUiSlider.create(vnus.slider, vnus.config);
+    var showThumbs = false;
+
+    if (vnus.config.tooltips == true) {
+      vnus.config.tooltips = false;
+      showThumbs = true;
+    }
+
+    noUiSlider.create(vnus.slider, vnus.config); //get all connecting sliders
+
+    var connectors = document.getElementsByClassName("noUi-connect"); //filter out non colored connectors
+
+    var connectorColors = vnus.config.connectColors.filter(function (d, ind) {
+      return vnus.config.connect[ind];
+    }); //color each slider can be a class, hex, rgb etc
+
+    for (var j = 0; j < connectors.length; j++) {
+      var connector = connectors[j];
+      this.isColorValid(connectorColors[j]) ? connector.style.backgroundColor = connectorColors[j] : connector.classList.add(connectorColors[j]);
+    } //set up custom tooltips
+
+
+    var tooltipInputs = []; //only if they use showthumb prop!
+
+    if (this.showThumb || showThumbs) {
+      for (var _i = 0; _i < vnus.config.start.length; _i++) {
+        tooltipInputs.push(this.makeToolTip(_i, vnus.slider));
+      }
+    }
+
     vnus.slider.noUiSlider.on("update", function (values, handle) {
+      //update custom tooltips
+      if (_this.showThumb || showThumbs) {
+        tooltipInputs[handle].innerText = Math.round(values[handle]);
+      }
+
       vnus.$emit("update", values);
       if (vnus.log) window.console.log("[vnus]<" + handle + ">" + values);
     });
@@ -67,24 +108,33 @@ var script = {
 
     if (this.color) {
       Array.from(handles).forEach(function (el) {
-        el.style.backgroundColor = "#eeeeee";
         _this.isColorValid(_this.color) ? (el.style.backgroundColor = _this.color, el.style.borderColor = _this.color) : el.classList.add(_this.color);
       });
     }
 
     vnus.slider.noUiSlider.on("start", function (values, index, unencoded, tap, positions) {
       var handle = Array.from(vnus.slider.getElementsByClassName("noUi-handle"))[index];
-      handle.style.width = "20px";
-      handle.style.height = "20px";
-      handle.style.top = "-9px";
-      handle.style.right = "-17px";
+
+      if (!_this.showThumb) {
+        handle.style.width = "20px";
+        handle.style.height = "20px";
+        handle.style.top = "-9.5px";
+        handle.style.right = "-17px";
+      } else {
+        handle.style.transform = "scale(0)";
+      }
     });
     vnus.slider.noUiSlider.on("end", function (values, index, unencoded, tap, positions) {
       var handle = Array.from(vnus.slider.getElementsByClassName("noUi-handle"))[index];
-      handle.style.width = "15px";
-      handle.style.height = "15px";
-      handle.style.top = "-6px";
-      handle.style.right = "-14px";
+
+      if (!_this.showThumb) {
+        handle.style.width = "15px";
+        handle.style.height = "15px";
+        handle.style.top = "-6.5px";
+        handle.style.right = "-14px";
+      } else {
+        handle.style.transform = "scale(1)";
+      }
     });
   },
   methods: {
@@ -96,6 +146,21 @@ var script = {
     isColorValid: function isColorValid(c) {
       var s = this.getColorCSS(c);
       return s ? true : false;
+    },
+    makeToolTip: function makeToolTip(i, slider) {
+      var tooltip = document.createElement("div"),
+          span = document.createElement("span");
+      this.isColorValid(this.color) ? (tooltip.style.backgroundColor = this.thumbColor, tooltip.style.borderColor = this.thumbColor) : tooltip.classList.add(this.thumbColor); // Add the input to the tooltip
+
+      tooltip.className = "noUi-tooltip";
+      tooltip.appendChild(span); // On change, set the slider
+
+      span.innerText = this.value;
+      span.addEventListener("start", null); // Find the lower/upper slider handle and insert the tooltip
+
+      var handles = Array.from(slider.querySelectorAll(".noUi-handle"));
+      handles[i].parentElement.appendChild(tooltip);
+      return span;
     }
   },
   watch: {
