@@ -44,11 +44,11 @@ data: {
 ## Advanced Usage
 
 
-### Customize Thumb Colors
+### Customize Handle/Thumb Colors
 
 ```html
 Accepts HEX, RGB and classes.
-<v-nus :color="red" :config="config" :value="values" />
+<v-nus :color="red" thumb-color="red" :thumb-show="true" :config="config" :value="values" />
 ```
 
 ### Customize ID
