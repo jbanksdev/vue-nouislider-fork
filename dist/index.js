@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.13
+ * vue-nouislider-fork v1.0.14
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
@@ -67,7 +67,8 @@ var script = {
       showThumbs = true;
     }
 
-    noUiSlider.create(vnus.slider, vnus.config); //get all connecting sliders
+    noUiSlider.create(vnus.slider, vnus.config);
+    this.slider.style.marginBottom = "80px"; //get all connecting sliders
 
     var connectors = document.getElementsByClassName("noUi-connect"); //filter out non colored connectors
 
@@ -182,9 +183,9 @@ var script = {
     },
     disabled: function disabled() {
       var slider = document.getElementById("v-nus-" + this.id);
-      this.disabled ? document.querySelectorAll(".noUi-origin").forEach(function (handle) {
+      this.disabled ? slider.querySelectorAll(".noUi-origin").forEach(function (handle) {
         return handle.style.display = "none";
-      }) : document.querySelectorAll(".noUi-origin").forEach(function (handle) {
+      }) : slider.querySelectorAll(".noUi-origin").forEach(function (handle) {
         return handle.style.display = "initial";
       });
       this.disabled ? slider.setAttribute("disabled", this.disabled) : slider.removeAttribute("disabled");
