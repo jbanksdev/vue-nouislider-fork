@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.14
+ * vue-nouislider-fork v1.0.15
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
