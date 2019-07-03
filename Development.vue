@@ -64,6 +64,7 @@ export default {
 
     noUiSlider.create(vnus.slider, vnus.config);
 
+    this.slider.style.marginBottom = "80px";
     //get all connecting sliders
     var connectors = document.getElementsByClassName("noUi-connect");
     //filter out non colored connectors
@@ -211,14 +212,13 @@ export default {
       }
     },
     disabled() {
-
       var slider = document.getElementById("v-nus-" + this.id);
 
       this.disabled
-        ? document
+        ? slider
             .querySelectorAll(".noUi-origin")
             .forEach(handle => (handle.style.display = "none"))
-        : document
+        : slider
             .querySelectorAll(".noUi-origin")
             .forEach(handle => (handle.style.display = "initial"));
 

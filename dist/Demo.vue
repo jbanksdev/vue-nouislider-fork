@@ -1,15 +1,16 @@
 <template>
   <div style="padding-top: 10%;">
     <v-nus
-      :id="'test-slider'"
       :config="config"
-    
       show-thumb
       :value="values"
       @update="values = $event"
       :disabled="disabled"
     ></v-nus>
-    <p style="margin-top:2rem">{{ values }}</p> <button @click="disabled = !disabled">Disable</button>
+   
+
+    <p style="margin-top:2rem">{{ values }}</p>
+    <button @click="disabled = !disabled">Disable</button>
   </div>
 </template>
 <script>
@@ -31,10 +32,9 @@ export default {
         step: 1,
         tooltips: false
       },
-      values: [25, 35, 75, 90]
+      values: [25, 35, 75, 90],
+      values1: [25, 35, 75, 90]
     };
   }
 };
 </script>
-
-

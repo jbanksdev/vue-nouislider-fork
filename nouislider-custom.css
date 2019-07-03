@@ -1,3 +1,8 @@
+.noUi-base {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
 .noUi-horizontal .noUi-handle {
   border: none;
   border-radius: 50%;
