@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.11
+ * vue-nouislider-fork v1.0.12
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
@@ -33,6 +33,10 @@ var script = {
     thumbColor: {
       type: String,
       "default": "#1867c0"
+    },
+    disabled: {
+      type: Boolean,
+      "default": false
     },
     config: Object,
     value: Array,
@@ -175,6 +179,16 @@ var script = {
       } else {
         this.init = true;
       }
+    },
+    disabled: function disabled() {
+      var slider = document.getElementById("v-nus-" + this.id);
+      this.disabled ? document.querySelectorAll(".noUi-origin").forEach(function (handle) {
+        return handle.style.display = "none";
+      }) : document.querySelectorAll(".noUi-origin").forEach(function (handle) {
+        return handle.style.display = "initial";
+      });
+      this.disabled ? slider.setAttribute("disabled", this.disabled) : slider.removeAttribute("disabled");
+      slider.style.filter = this.disabled ? "grayscale(1) brightness(0.5)" : "grayscale(0) brightness(1)";
     }
   }
 };

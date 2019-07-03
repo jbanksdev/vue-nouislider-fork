@@ -28,6 +28,10 @@ export default {
       type: String,
       default: "#1867c0"
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     config: Object,
     value: Array,
     log: Boolean
@@ -40,6 +44,7 @@ export default {
     };
   },
   created() {},
+
   computed: {
     slider: function() {
       return document.getElementById("v-nus-" + this.id);
@@ -204,6 +209,26 @@ export default {
       } else {
         this.init = true;
       }
+    },
+    disabled() {
+
+      var slider = document.getElementById("v-nus-" + this.id);
+
+      this.disabled
+        ? document
+            .querySelectorAll(".noUi-origin")
+            .forEach(handle => (handle.style.display = "none"))
+        : document
+            .querySelectorAll(".noUi-origin")
+            .forEach(handle => (handle.style.display = "initial"));
+
+      this.disabled
+        ? slider.setAttribute("disabled", this.disabled)
+        : slider.removeAttribute("disabled");
+
+      slider.style.filter = this.disabled
+        ? "grayscale(1) brightness(0.5)"
+        : "grayscale(0) brightness(1)";
     }
   }
 };

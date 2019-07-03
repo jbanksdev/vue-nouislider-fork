@@ -7,8 +7,9 @@
       show-thumb
       :value="values"
       @update="values = $event"
+      :disabled="disabled"
     ></v-nus>
-    <p style="margin-top:2rem">{{ values }}</p>
+    <p style="margin-top:2rem">{{ values }}</p> <button @click="disabled = !disabled">Disable</button>
   </div>
 </template>
 <script>
@@ -19,6 +20,7 @@ export default {
   },
   data() {
     return {
+      disabled: true,
       config: {
         connect: [true, true, true, false, true],
         connectColors: ["blue", "red", "orange", "purple", "green"],

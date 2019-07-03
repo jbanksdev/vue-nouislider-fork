@@ -51,6 +51,13 @@ Accepts HEX, RGB and classes.
 <v-nus :color="red" thumb-color="red" :thumb-show="true" :config="config" :value="values" />
 ```
 
+### Disable Slider
+
+```html
+Disable the slider.
+<v-nus :config="config" :value="values" :disabled='true'/>
+```
+
 ### Customize ID
 
 ```html
