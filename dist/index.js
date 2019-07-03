@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.10
+ * vue-nouislider-fork v1.0.11
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
@@ -149,8 +149,10 @@ var script = {
     },
     makeToolTip: function makeToolTip(i, slider) {
       var tooltip = document.createElement("div"),
-          span = document.createElement("span");
-      this.isColorValid(this.color) ? (tooltip.style.backgroundColor = this.thumbColor, tooltip.style.borderColor = this.thumbColor) : tooltip.classList.add(this.thumbColor); // Add the input to the tooltip
+          span = document.createElement("span"),
+          tooltip_overlay = document.createElement("div");
+      this.isColorValid(this.color) ? (tooltip.style.backgroundColor = this.thumbColor, tooltip.style.borderColor = this.thumbColor) : tooltip.classList.add(this.thumbColor);
+      tooltip_overlay.className = "noUi-handle-draggable-tooltip-overlay"; // Add the input to the tooltip
 
       tooltip.className = "noUi-tooltip";
       tooltip.appendChild(span); // On change, set the slider
@@ -159,6 +161,7 @@ var script = {
       span.addEventListener("start", null); // Find the lower/upper slider handle and insert the tooltip
 
       var handles = Array.from(slider.querySelectorAll(".noUi-handle"));
+      handles[i].appendChild(tooltip_overlay);
       handles[i].parentElement.appendChild(tooltip);
       return span;
     }

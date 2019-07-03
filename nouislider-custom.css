@@ -39,6 +39,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .noUi-tooltip {
+  z-index: -1;
   align-items: center;
   justify-content: center;
   font-family: "Roboto", "Segoe UI";
@@ -59,4 +60,19 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
   display: inline-block;
+}
+
+.noUi-handle-draggable-tooltip-overlay {
+  z-index: 10 !important;
+  top: -170%;
+  left: 49%;
+  background: transparent;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50% 50% 0;
+  position: absolute;
+  -webkit-transform: translateY(-20%) translateY(-12px) translateX(-50%)
+    rotate(45deg) !important;
+  transform: translateY(-20%) translateY(-12px) translateX(-50%) rotate(45deg) !important;
 }
