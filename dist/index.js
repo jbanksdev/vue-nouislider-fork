@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.16
+ * vue-nouislider-fork v1.0.17
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
@@ -88,6 +88,10 @@ var script = {
       }
     }
 
+    vnus.slider.noUiSlider.on("change", function (values, handle) {
+      vnus.$emit("change", values);
+      if (vnus.log) window.console.log("[vnus]<" + handle + ">" + values);
+    });
     vnus.slider.noUiSlider.on("update", function (values, handle) {
       //update custom tooltips
       if (_this.showThumb || _this.tooltips) {

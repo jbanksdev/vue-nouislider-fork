@@ -64,7 +64,7 @@ export default {
     noUiSlider.create(vnus.slider, vnus.config);
 
     if (!this.showThumb && this.tooltips) {
-      this.slider.classList.add("noUi-hover-tooltips")
+      this.slider.classList.add("noUi-hover-tooltips");
     }
     if (this.disabled) {
       this.disableSlider();
@@ -81,6 +81,11 @@ export default {
         tooltipInputs.push(this.makeToolTip(i, vnus.slider));
       }
     }
+
+    vnus.slider.noUiSlider.on("change", (values, handle) => {
+      vnus.$emit("change", values);
+      if (vnus.log) window.console.log("[vnus]<" + handle + ">" + values);
+    });
 
     vnus.slider.noUiSlider.on("update", (values, handle) => {
       //update custom tooltips
@@ -120,14 +125,13 @@ export default {
           var tooltip = Array.from(
             vnus.slider.getElementsByClassName("noUi-tooltip")
           )[index];
-    
+
           tooltip.style.display = "flex";
         }
 
         var handle = Array.from(
           vnus.slider.getElementsByClassName("noUi-handle")
         )[index];
-
 
         handle.style.transform = "scale(0)";
       }
