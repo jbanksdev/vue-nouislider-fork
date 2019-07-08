@@ -2,7 +2,7 @@
   <div style="padding-top: 10%;">
     <v-nus
       :config="config"
-      show-thumb
+     show-thumb
       :value="values"
       @update="values = $event"
       :disabled="disabled"

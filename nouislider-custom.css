@@ -59,6 +59,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   -webkit-transform: translateY(-20%) translateY(-12px) translateX(-50%)
     rotate(45deg) !important;
   transform: translateY(-20%) translateY(-12px) translateX(-50%) rotate(45deg) !important;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .noUi-tooltip > * {
@@ -80,4 +81,30 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   -webkit-transform: translateY(-20%) translateY(-12px) translateX(-50%)
     rotate(45deg) !important;
   transform: translateY(-20%) translateY(-12px) translateX(-50%) rotate(45deg) !important;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.noUi-target[disabled] > .noUi-base > .noUi-connects > .noUi-connect {
+  background: #bdbdbd !important;
+}
+
+.noUi-target[disabled] > .noUi-base > .noUi-origin > .noUi-handle {
+  background-color: #bdbdbd !important;
+  border-color: #bdbdbd !important;
+  width: 8px;
+  height: 8px;
+  margin-top: 3px;
+  right: -4px;
+}
+
+.noUi-target[disabled] > .noUi-base > .noUi-origin > .noUi-tooltip {
+  display: none;
+}
+
+.noUi-hover-tooltips > .noUi-base > .noUi-origin > .noUi-tooltip {
+  display: none;
+}
+.noUi-hover-tooltips > .noUi-base > .noUi-origin > .noUi-handle.noUi-active > .noUi-tooltip {
+  transform: scale(1) !important;
+  display: flex;
 }

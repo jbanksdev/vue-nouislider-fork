@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.15
+ * vue-nouislider-fork v1.0.16
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
@@ -28,15 +28,15 @@ var script = {
       "default": "#1867c0"
     },
     showThumb: {
-      type: Boolean
+      type: Boolean,
+      "default": false
     },
     thumbColor: {
       type: String,
       "default": "#1867c0"
     },
     disabled: {
-      type: Boolean,
-      "default": false
+      type: Boolean
     },
     config: Object,
     value: Array,
@@ -46,7 +46,8 @@ var script = {
     return {
       init: false,
       upperHandleValue: 0,
-      lowerHandleValue: 0
+      lowerHandleValue: 0,
+      tooltips: false
     };
   },
   created: function created() {},
@@ -60,31 +61,28 @@ var script = {
 
     var vnus = this;
     vnus.config.start = vnus.value;
-    var showThumbs = false;
 
     if (vnus.config.tooltips == true) {
       vnus.config.tooltips = false;
-      showThumbs = true;
+      this.tooltips = true;
     }
 
     noUiSlider.create(vnus.slider, vnus.config);
-    this.slider.style.marginBottom = "80px"; //get all connecting sliders
 
-    var connectors = document.getElementsByClassName("noUi-connect"); //filter out non colored connectors
+    if (!this.showThumb && this.tooltips) {
+      this.slider.classList.add("noUi-hover-tooltips");
+    }
 
-    var connectorColors = vnus.config.connectColors.filter(function (d, ind) {
-      return vnus.config.connect[ind];
-    }); //color each slider can be a class, hex, rgb etc
+    if (this.disabled) {
+      this.disableSlider();
+    }
 
-    for (var j = 0; j < connectors.length; j++) {
-      var connector = connectors[j];
-      this.isColorValid(connectorColors[j]) ? connector.style.backgroundColor = connectorColors[j] : connector.classList.add(connectorColors[j]);
-    } //set up custom tooltips
+    this.slider.style.marginBottom = "80px";
+    this.colorConnectors(vnus); //set up custom tooltips
 
+    var tooltipInputs = [];
 
-    var tooltipInputs = []; //only if they use showthumb prop!
-
-    if (this.showThumb || showThumbs) {
+    if (this.showThumb || this.tooltips) {
       for (var _i = 0; _i < vnus.config.start.length; _i++) {
         tooltipInputs.push(this.makeToolTip(_i, vnus.slider));
       }
@@ -92,7 +90,7 @@ var script = {
 
     vnus.slider.noUiSlider.on("update", function (values, handle) {
       //update custom tooltips
-      if (_this.showThumb || showThumbs) {
+      if (_this.showThumb || _this.tooltips) {
         tooltipInputs[handle].innerText = Math.round(values[handle]);
       }
 
@@ -118,31 +116,38 @@ var script = {
     }
 
     vnus.slider.noUiSlider.on("start", function (values, index, unencoded, tap, positions) {
-      var handle = Array.from(vnus.slider.getElementsByClassName("noUi-handle"))[index];
-
-      if (!_this.showThumb) {
-        handle.style.width = "20px";
-        handle.style.height = "20px";
-        handle.style.top = "-9.5px";
-        handle.style.right = "-17px";
-      } else {
-        handle.style.transform = "scale(0)";
+      if (_this.showThumb == false && _this.tooltips) {
+        var tooltip = Array.from(vnus.slider.getElementsByClassName("noUi-tooltip"))[index];
+        tooltip.style.display = "flex";
       }
+
+      var handle = Array.from(vnus.slider.getElementsByClassName("noUi-handle"))[index];
+      handle.style.transform = "scale(0)";
     });
     vnus.slider.noUiSlider.on("end", function (values, index, unencoded, tap, positions) {
-      var handle = Array.from(vnus.slider.getElementsByClassName("noUi-handle"))[index];
-
-      if (!_this.showThumb) {
-        handle.style.width = "15px";
-        handle.style.height = "15px";
-        handle.style.top = "-6.5px";
-        handle.style.right = "-14px";
-      } else {
-        handle.style.transform = "scale(1)";
+      if (_this.showThumb == false && _this.tooltips) {
+        var tooltip = Array.from(vnus.slider.getElementsByClassName("noUi-tooltip"))[index];
+        tooltip.style.display = "none";
       }
+
+      var handle = Array.from(vnus.slider.getElementsByClassName("noUi-handle"))[index];
+      handle.style.transform = "scale(1)";
     });
   },
   methods: {
+    colorConnectors: function colorConnectors(vnus) {
+      //get all connecting sliders
+      var connectors = document.getElementsByClassName("noUi-connect"); //filter out non colored connectors
+
+      var connectorColors = vnus.config.connectColors.filter(function (d, ind) {
+        return vnus.config.connect[ind];
+      }); //color each slider can be a class, hex, rgb etc
+
+      for (var j = 0; j < connectors.length; j++) {
+        var connector = connectors[j];
+        this.isColorValid(connectorColors[j]) ? connector.style.backgroundColor = connectorColors[j] : connector.classList.add(connectorColors[j]);
+      }
+    },
     getColorCSS: function getColorCSS(c) {
       var ele = document.createElement("div");
       ele.style.color = c;
@@ -169,6 +174,10 @@ var script = {
       handles[i].appendChild(tooltip_overlay);
       handles[i].parentElement.appendChild(tooltip);
       return span;
+    },
+    disableSlider: function disableSlider() {
+      var slider = document.getElementById("v-nus-" + this.id);
+      this.disabled ? slider.setAttribute("disabled", this.disabled) : slider.removeAttribute("disabled");
     }
   },
   watch: {
@@ -182,14 +191,8 @@ var script = {
       }
     },
     disabled: function disabled() {
-      var slider = document.getElementById("v-nus-" + this.id);
-      this.disabled ? slider.querySelectorAll(".noUi-origin").forEach(function (handle) {
-        return handle.style.display = "none";
-      }) : slider.querySelectorAll(".noUi-origin").forEach(function (handle) {
-        return handle.style.display = "initial";
-      });
-      this.disabled ? slider.setAttribute("disabled", this.disabled) : slider.removeAttribute("disabled");
-      slider.style.filter = this.disabled ? "grayscale(1) brightness(0.5)" : "grayscale(0) brightness(1)";
+      console.log(this.disabled);
+      this.disableSlider();
     }
   }
 };
