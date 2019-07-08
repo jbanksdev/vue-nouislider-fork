@@ -1,15 +1,16 @@
 <template>
   <div style="padding-top: 10%;">
     <v-nus
+      v-model="range"
       :config="config"
-     show-thumb
-      :value="values"
-      @update="values = $event"
-      :disabled="disabled"
-    ></v-nus>
-   
+      show-thumb
 
-    <p style="margin-top:2rem">{{ values }}</p>
+
+      :disabled="disabled"
+      @change="testtap()"
+    ></v-nus>
+
+    <p style="margin-top:2rem">{{ range }}</p>
     <button @click="disabled = !disabled">Disable</button>
   </div>
 </template>
@@ -21,6 +22,7 @@ export default {
   },
   data() {
     return {
+      range: [],
       disabled: true,
       config: {
         connect: [true, true, true, false, true],
@@ -32,9 +34,18 @@ export default {
         step: 1,
         tooltips: false
       },
-      values: [25, 35, 75, 90],
-      values1: [25, 35, 75, 90]
+      range: [25, 35, 75, 90]
     };
-  }
+  },
+  watch: {
+    range(newValue, oldValue) {
+      console.log(this.range);
+    }
+  },
+  methods: {
+    testtap() {
+      console.log('no tappys');
+    }
+  },
 };
 </script>

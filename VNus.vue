@@ -82,16 +82,21 @@ export default {
       }
     }
 
-    vnus.slider.noUiSlider.on("change", (values, handle) => {
-      vnus.$emit("change", values);
-      if (vnus.log) window.console.log("[vnus]<" + handle + ">" + values);
-    });
-    
+    vnus.slider.noUiSlider.on(
+      "change",
+      (values, handle, unencoded, tap, positions) => {
+        vnus.$emit("change", values);
+      }
+    );
+
     vnus.slider.noUiSlider.on("update", (values, handle) => {
       //update custom tooltips
       if (this.showThumb || this.tooltips) {
         tooltipInputs[handle].innerText = Math.round(values[handle]);
       }
+
+      this.$emit("input", values);
+
       vnus.$emit("update", values);
       if (vnus.log) window.console.log("[vnus]<" + handle + ">" + values);
     });
