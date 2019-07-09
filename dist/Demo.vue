@@ -4,8 +4,6 @@
       v-model="range"
       :config="config"
       show-thumb
-
-
       :disabled="disabled"
       @change="testtap()"
     ></v-nus>
@@ -29,12 +27,18 @@ export default {
         connectColors: ["blue", "red", "orange", "purple", "green"],
         range: {
           min: [0],
-          max: [100]
+          max: [5]
         },
-        step: 1,
-        tooltips: false
+        step: 0.1,
+        tooltips: false,
+        pips: {
+          mode: "range",
+          type: "custom",
+          density: 2,
+           stepped: true
+        }
       },
-      range: [25, 35, 75, 90]
+      range: [0.01, 0.5, 0.9, 1.5]
     };
   },
   watch: {
@@ -44,8 +48,8 @@ export default {
   },
   methods: {
     testtap() {
-      console.log('no tappys');
+      console.log("no tappys");
     }
-  },
+  }
 };
 </script>
