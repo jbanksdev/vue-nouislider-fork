@@ -64,6 +64,7 @@ export default {
     noUiSlider.create(vnus.slider, vnus.config);
 
     if (
+      vnus.config.pips &&
       vnus.config.pips.mode == "range" &&
       vnus.config.pips.density == 2 &&
       vnus.config.pips.stepped == true &&

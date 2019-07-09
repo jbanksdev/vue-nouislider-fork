@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.19
+ * vue-nouislider-fork v1.0.20
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
@@ -69,7 +69,7 @@ var script = {
 
     noUiSlider.create(vnus.slider, vnus.config);
 
-    if (vnus.config.pips.mode == "range" && vnus.config.pips.density == 2 && vnus.config.pips.stepped == true && vnus.config.pips.type == "custom") {
+    if (vnus.config.pips && vnus.config.pips.mode == "range" && vnus.config.pips.density == 2 && vnus.config.pips.stepped == true && vnus.config.pips.type == "custom") {
       this.slider.getElementsByClassName("noUi-base")[0].appendChild(this.slider.getElementsByClassName("noUi-pips")[0]);
       this.slider.getElementsByClassName("noUi-base")[0].getElementsByClassName("noUi-pips")[0].classList.add("custom-pips");
     }
