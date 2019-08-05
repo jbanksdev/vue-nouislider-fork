@@ -7,7 +7,7 @@
       :disabled="disabled"
       @change="testtap()"
     ></v-nus>
-
+    <button @click="updateRange">click here to add more range</button>
     <p style="margin-top:2rem">{{ range }}</p>
     <button @click="disabled = !disabled">Disable</button>
   </div>
@@ -35,7 +35,7 @@ export default {
           mode: "range",
           type: "custom",
           density: 2,
-           stepped: true
+          stepped: true
         }
       },
       range: [0.01, 0.5, 0.9, 1.5]
@@ -49,6 +49,13 @@ export default {
   methods: {
     testtap() {
       console.log("no tappys");
+    },
+    updateRange() {
+      this.config.range = {
+        min: [0],
+        max: [15]
+      };
+      console.log(this.config)
     }
   }
 };

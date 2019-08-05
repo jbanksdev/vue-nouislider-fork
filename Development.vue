@@ -243,6 +243,18 @@ export default {
     }
   },
   watch: {
+    config: {
+      handler: function(newValue, oldValue) {
+        this.slider.noUiSlider.updateOptions({
+          range: {
+            min: [newValue.range.min[0]],
+            max: [newValue.range.max[0]]
+          },
+          step: newValue.step
+        });
+      },
+      deep: true
+    },
     value: function(nv) {
       if (this.init) {
         var nus = this.slider.noUiSlider.get();

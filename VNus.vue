@@ -64,7 +64,6 @@ export default {
     noUiSlider.create(vnus.slider, vnus.config);
 
     if (
-      vnus.config.pips &&
       vnus.config.pips.mode == "range" &&
       vnus.config.pips.density == 2 &&
       vnus.config.pips.stepped == true &&
@@ -244,6 +243,18 @@ export default {
     }
   },
   watch: {
+    config: {
+      handler: function(newValue, oldValue) {
+        this.slider.noUiSlider.updateOptions({
+          range: {
+            min: [newValue.range.min[0]],
+            max: [newValue.range.max[0]]
+          },
+          step: newValue.step
+        });
+      },
+      deep: true
+    },
     value: function(nv) {
       if (this.init) {
         var nus = this.slider.noUiSlider.get();
