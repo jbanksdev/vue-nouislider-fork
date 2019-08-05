@@ -1,6 +1,6 @@
 # Vue noUiSlider
 
-a Vue component for [noUiSlider](https://github.com/leongersen/noUiSlider)
+a Vue component for [noUiSlider](https://github.com/leongersen/noUiSlider) that is forked and intended to look like [Vuetify sliders](https://vuetifyjs.com/en/components/sliders)
 
 ## Install
 
@@ -11,10 +11,7 @@ npm i vue-nouislider-fork
 ## main.js
 
 ```html
-import VNus from "vue-nouislider-fork";
-import Vue from "vue";
-
-Vue.use(VNus);
+import VNus from "vue-nouislider-fork"; import Vue from "vue"; Vue.use(VNus);
 ```
 
 ## Basic Usage
@@ -43,19 +40,23 @@ data: {
 
 ## Advanced Usage
 
-
 ### Customize Handle/Thumb Colors
 
 ```html
 Accepts HEX, RGB and classes.
-<v-nus :color="red" thumb-color="red" :thumb-show="true" :config="config" :value="values" />
+<v-nus
+  :color="red"
+  thumb-color="red"
+  :thumb-show="true"
+  :config="config"
+  :value="values"
+/>
 ```
 
 ### Disable Slider
 
 ```html
-Disable the slider.
-<v-nus :config="config" :value="values" :disabled='true'/>
+Disable the slider. <v-nus :config="config" :value="values" :disabled="true" />
 ```
 
 ### Customize ID
@@ -73,10 +74,9 @@ Prefixed with 'v-nus'.
 
 ## References
 
-* Forked From [vue-nouislider (horans)](https://github.com/horans/vue-nouislider)
-
-* Inspiration: [VueJS-noUiSlider](https://github.com/BradKriss/VueJS-noUiSlider)
-* Linter: [standard](https://github.com/standard/standard)
+- Forked From [vue-nouislider (horans)](https://github.com/horans/vue-nouislider)
+- [Vuetify](https://vuetifyjs.com/)
+- Inspiration: [VueJS-noUiSlider](https://github.com/BradKriss/VueJS-noUiSlider)
+- Linter: [standard](https://github.com/standard/standard)
 
 ## Change Log
-
