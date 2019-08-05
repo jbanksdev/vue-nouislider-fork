@@ -1,5 +1,5 @@
 /*!
- * vue-nouislider-fork v1.0.22
+ * vue-nouislider-fork v1.0.23
  * (c) Jarrad Banks
  * Released under the MIT License.
  */
@@ -47,7 +47,8 @@ var script = {
       init: false,
       upperHandleValue: 0,
       lowerHandleValue: 0,
-      tooltips: false
+      tooltips: false,
+      config1: this.config
     };
   },
   created: function created() {},
@@ -192,14 +193,16 @@ var script = {
   },
   watch: {
     config: {
-      handler: function handler(newValue, oldValue) {
-        this.slider.noUiSlider.updateOptions({
-          range: {
-            min: [newValue.range.min[0]],
-            max: [newValue.range.max[0]]
-          },
-          step: newValue.step
-        });
+      handler: function handler(newValue) {
+        if (JSON.stringify(this.config1) !== JSON.stringify(newValue)) {
+          this.slider.noUiSlider.updateOptions({
+            range: {
+              min: [newValue.range.min[0]],
+              max: [newValue.range.max[0]]
+            },
+            step: newValue.step
+          });
+        }
       },
       deep: true
     },
@@ -213,7 +216,6 @@ var script = {
       }
     },
     disabled: function disabled() {
-      console.log(this.disabled);
       this.disableSlider();
     }
   }

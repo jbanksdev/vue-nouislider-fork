@@ -41,7 +41,8 @@ export default {
       init: false,
       upperHandleValue: 0,
       lowerHandleValue: 0,
-      tooltips: false
+      tooltips: false,
+      config1: this.config
     };
   },
   created() {},
@@ -245,14 +246,16 @@ export default {
   },
   watch: {
     config: {
-      handler: function(newValue, oldValue) {
-        this.slider.noUiSlider.updateOptions({
-          range: {
-            min: [newValue.range.min[0]],
-            max: [newValue.range.max[0]]
-          },
-          step: newValue.step
-        });
+      handler: function(newValue) {
+        if (JSON.stringify(this.config1) !== JSON.stringify(newValue)) {
+          this.slider.noUiSlider.updateOptions({
+            range: {
+              min: [newValue.range.min[0]],
+              max: [newValue.range.max[0]]
+            },
+            step: newValue.step
+          });
+        }
       },
       deep: true
     },
@@ -267,7 +270,7 @@ export default {
       }
     },
     disabled() {
-      console.log(this.disabled);
+     
       this.disableSlider();
     }
   }

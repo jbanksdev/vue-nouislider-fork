@@ -6,14 +6,10 @@
       show-thumb
       :disabled="disabled"
       @change="testtap()"
+      :log="false"
     ></v-nus>
 
-     <v-nus
-      v-model="range1"
-      :config="config1"
-      show-thumb
-  
-    ></v-nus>
+    <v-nus v-model="range1" :config="config1" show-thumb :log="false"></v-nus>
 
     <button @click="updateRange">click here to add more range</button>
     <p style="margin-top:2rem">{{ range }}</p>
@@ -46,7 +42,7 @@ export default {
           stepped: true
         }
       },
-        config1: {
+      config1: {
         connect: [true, true, true, false, true],
         connectColors: ["blue", "red", "orange", "purple", "green"],
         range: {
@@ -58,14 +54,10 @@ export default {
         pips: null
       },
       range: [0.01, 0.5, 0.9, 1.5],
-       range1: [0.5, 0.7, 0.9, 1.5]
+      range1: [0.5, 0.7, 0.9, 1.5]
     };
   },
-  watch: {
-    range(newValue, oldValue) {
-      console.log(this.range);
-    }
-  },
+  watch: {},
   methods: {
     testtap() {
       console.log("no tappys");
@@ -75,7 +67,7 @@ export default {
         min: [0],
         max: [15]
       };
-      console.log(this.config)
+      console.log(this.config);
     }
   }
 };

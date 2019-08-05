@@ -38,6 +38,9 @@ export default {
   },
   data: function() {
     return {
+      parentid: Math.random()
+        .toString(36)
+        .substr(2, 4),
       init: false,
       upperHandleValue: 0,
       lowerHandleValue: 0,
@@ -52,131 +55,136 @@ export default {
     }
   },
   mounted: function() {
-    var vnus = this;
-
-    vnus.config.start = vnus.value;
-
-    if (vnus.config.tooltips == true) {
-      vnus.config.tooltips = false;
-      this.tooltips = true;
-    }
-
-    noUiSlider.create(vnus.slider, vnus.config);
-
-    if (
-      vnus.config.pips != null &&
-      vnus.config.pips.mode == "range" &&
-      vnus.config.pips.density == 2 &&
-      vnus.config.pips.stepped == true &&
-      vnus.config.pips.type == "custom"
-    ) {
-      this.slider
-        .getElementsByClassName("noUi-base")[0]
-        .appendChild(this.slider.getElementsByClassName("noUi-pips")[0]);
-
-      this.slider
-        .getElementsByClassName("noUi-base")[0]
-        .getElementsByClassName("noUi-pips")[0]
-        .classList.add("custom-pips");
-    }
-    if (!this.showThumb && this.tooltips) {
-      this.slider.classList.add("noUi-hover-tooltips");
-    }
-    if (this.disabled) {
-      this.disableSlider();
-    }
-    this.slider.style.marginBottom = "80px";
-
-    this.colorConnectors(vnus);
-
-    //set up custom tooltips
-    var tooltipInputs = [];
-
-    if (this.showThumb || this.tooltips) {
-      for (let i = 0; i < vnus.config.start.length; i++) {
-        tooltipInputs.push(this.makeToolTip(i, vnus.slider));
-      }
-    }
-
-    vnus.slider.noUiSlider.on(
-      "change",
-      (values, handle, unencoded, tap, positions) => {
-        vnus.$emit("change", values);
-      }
-    );
-
-    vnus.slider.noUiSlider.on("update", (values, handle) => {
-      //update custom tooltips
-      if (this.showThumb || this.tooltips) {
-        tooltipInputs[handle].innerText = Number(values[handle].toString(2));
-      }
-
-      this.$emit("input", values);
-
-      vnus.$emit("update", values);
-      if (vnus.log) window.console.log("[vnus]<" + handle + ">" + values);
-    });
-
-    var handles = vnus.slider.getElementsByClassName("noUi-handle");
-
-    if (this.config.connectColors) {
-      var connect = vnus.slider.querySelectorAll(".noUi-connect");
-
-      if (Array.from(connect).length == this.config.connectColors.length) {
-        for (var i = 0; i < connect.length; i++) {
-          this.isColorValid(this.config.connectColors[i])
-            ? (connect[i].style.backgroundColor = this.config.connectColors[i])
-            : connect[i].classList.add(this.config.connectColors[i]);
-        }
-      }
-    }
-    if (this.color) {
-      Array.from(handles).forEach(el => {
-        this.isColorValid(this.color)
-          ? ((el.style.backgroundColor = this.color),
-            (el.style.borderColor = this.color))
-          : el.classList.add(this.color);
-      });
-    }
-
-    vnus.slider.noUiSlider.on(
-      "start",
-      (values, index, unencoded, tap, positions) => {
-        if (this.showThumb == false && this.tooltips) {
-          var tooltip = Array.from(
-            vnus.slider.getElementsByClassName("noUi-tooltip")
-          )[index];
-
-          tooltip.style.display = "flex";
-        }
-
-        var handle = Array.from(
-          vnus.slider.getElementsByClassName("noUi-handle")
-        )[index];
-
-        handle.style.transform = "scale(0)";
-      }
-    );
-
-    vnus.slider.noUiSlider.on(
-      "end",
-      (values, index, unencoded, tap, positions) => {
-        if (this.showThumb == false && this.tooltips) {
-          var tooltip = Array.from(
-            vnus.slider.getElementsByClassName("noUi-tooltip")
-          )[index];
-
-          tooltip.style.display = "none";
-        }
-        var handle = Array.from(
-          vnus.slider.getElementsByClassName("noUi-handle")
-        )[index];
-
-        handle.style.transform = "scale(1)";
-      }
-    );
+    this.create();
   },
   methods: {
+    create() {
+      var vnus = this;
+
+      vnus.config.start = vnus.value;
+
+      if (vnus.config.tooltips == true) {
+        vnus.config.tooltips = false;
+        this.tooltips = true;
+      }
+
+      noUiSlider.create(vnus.slider, vnus.config);
+
+      if (
+        vnus.config.pips != null &&
+        vnus.config.pips.mode == "range" &&
+        vnus.config.pips.density == 2 &&
+        vnus.config.pips.stepped == true &&
+        vnus.config.pips.type == "custom"
+      ) {
+        this.slider
+          .getElementsByClassName("noUi-base")[0]
+          .appendChild(this.slider.getElementsByClassName("noUi-pips")[0]);
+
+        this.slider
+          .getElementsByClassName("noUi-base")[0]
+          .getElementsByClassName("noUi-pips")[0]
+          .classList.add("custom-pips");
+      }
+      if (!this.showThumb && this.tooltips) {
+        this.slider.classList.add("noUi-hover-tooltips");
+      }
+      if (this.disabled) {
+        this.disableSlider();
+      }
+      this.slider.style.marginBottom = "80px";
+
+      this.colorConnectors(vnus);
+
+      //set up custom tooltips
+      var tooltipInputs = [];
+
+      if (this.showThumb || this.tooltips) {
+        for (let i = 0; i < vnus.config.start.length; i++) {
+          tooltipInputs.push(this.makeToolTip(i, vnus.slider));
+        }
+      }
+
+      vnus.slider.noUiSlider.on(
+        "change",
+        (values, handle, unencoded, tap, positions) => {
+          vnus.$emit("change", values);
+        }
+      );
+
+      vnus.slider.noUiSlider.on("update", (values, handle) => {
+        //update custom tooltips
+        if (this.showThumb || this.tooltips) {
+          tooltipInputs[handle].innerText = Number(values[handle].toString(2));
+        }
+
+        this.$emit("input", values);
+
+        vnus.$emit("update", values);
+        if (vnus.log) window.console.log("[vnus]<" + handle + ">" + values);
+      });
+
+      var handles = vnus.slider.getElementsByClassName("noUi-handle");
+
+      if (this.config.connectColors) {
+        var connect = vnus.slider.querySelectorAll(".noUi-connect");
+
+        if (Array.from(connect).length == this.config.connectColors.length) {
+          for (var i = 0; i < connect.length; i++) {
+            this.isColorValid(this.config.connectColors[i])
+              ? (connect[i].style.backgroundColor = this.config.connectColors[
+                  i
+                ])
+              : connect[i].classList.add(this.config.connectColors[i]);
+          }
+        }
+      }
+      if (this.color) {
+        Array.from(handles).forEach(el => {
+          this.isColorValid(this.color)
+            ? ((el.style.backgroundColor = this.color),
+              (el.style.borderColor = this.color))
+            : el.classList.add(this.color);
+        });
+      }
+
+      vnus.slider.noUiSlider.on(
+        "start",
+        (values, index, unencoded, tap, positions) => {
+          if (this.showThumb == false && this.tooltips) {
+            var tooltip = Array.from(
+              vnus.slider.getElementsByClassName("noUi-tooltip")
+            )[index];
+
+            tooltip.style.display = "flex";
+          }
+
+          var handle = Array.from(
+            vnus.slider.getElementsByClassName("noUi-handle")
+          )[index];
+
+          handle.style.transform = "scale(0)";
+        }
+      );
+
+      vnus.slider.noUiSlider.on(
+        "end",
+        (values, index, unencoded, tap, positions) => {
+          if (this.showThumb == false && this.tooltips) {
+            var tooltip = Array.from(
+              vnus.slider.getElementsByClassName("noUi-tooltip")
+            )[index];
+
+            tooltip.style.display = "none";
+          }
+          var handle = Array.from(
+            vnus.slider.getElementsByClassName("noUi-handle")
+          )[index];
+
+          handle.style.transform = "scale(1)";
+        }
+      );
+    },
     colorConnectors(vnus) {
       //get all connecting sliders
       var connectors = document.getElementsByClassName("noUi-connect");
@@ -244,17 +252,37 @@ export default {
     }
   },
   watch: {
+    /*  tempconfig: {
+      immediate: true,
+      deep: true,
+      handler(newValue, oldValue) {
+        if (oldValue != undefined) {
+          this.updateSliderOptions();
+        }
+      }
+    },
+
+    "config.range.max": function(newValue, oldValue) {
+      if (newValue != oldValue) {
+        this.tempconfig.range.max[0] = newValue[0];
+      }
+    },
+    "config.step": function(newValue, oldValue) {
+      if (newValue != oldValue) {
+        this.tempconfig.step = newValue;
+      }
+    }, */
+
     config: {
-      handler: function(newValue, oldValue) {
-        this.slider.noUiSlider.updateOptions({
-          range: {
-            min: [newValue.range.min[0]],
-            max: [newValue.range.max[0]]
-          },
-          step: newValue.step
-        });
-      },
-      deep: true
+      immediate: true,
+      deep: true,
+      handler(newValue, oldValue) {
+        if (oldValue != undefined) {
+          this.slider.noUiSlider.destroy();
+
+          this.create();
+        }
+      }
     },
     value: function(nv) {
       if (this.init) {
