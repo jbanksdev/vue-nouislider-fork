@@ -7,6 +7,14 @@
       :disabled="disabled"
       @change="testtap()"
     ></v-nus>
+
+     <v-nus
+      v-model="range1"
+      :config="config1"
+      show-thumb
+  
+    ></v-nus>
+
     <button @click="updateRange">click here to add more range</button>
     <p style="margin-top:2rem">{{ range }}</p>
     <button @click="disabled = !disabled">Disable</button>
@@ -38,7 +46,19 @@ export default {
           stepped: true
         }
       },
-      range: [0.01, 0.5, 0.9, 1.5]
+        config1: {
+        connect: [true, true, true, false, true],
+        connectColors: ["blue", "red", "orange", "purple", "green"],
+        range: {
+          min: [0],
+          max: [5]
+        },
+        step: 0.1,
+        tooltips: false,
+        pips: null
+      },
+      range: [0.01, 0.5, 0.9, 1.5],
+       range1: [0.5, 0.7, 0.9, 1.5]
     };
   },
   watch: {
